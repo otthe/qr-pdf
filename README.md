@@ -40,4 +40,5 @@ doc.execute
 ```
 
 ## Things to consider
-This library lacks tests for now
+* This library only supports one page PDF's for now (although you can easily modify this for your needs) <br>
+* No tests currently
