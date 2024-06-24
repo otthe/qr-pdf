@@ -1,6 +1,6 @@
 #!/usr/bin/env ruby
 
-require_relative 'lib/QRPdf'
+require_relative '../lib/QRPdf'
 require 'optparse'
 
 if __FILE__ == $0
