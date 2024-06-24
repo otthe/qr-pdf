@@ -2,15 +2,18 @@ require 'hexapdf'
 require 'rqrcode'
 require 'chunky_png'
 require 'stringio'
-
+require 'fileutils'
 
 module QRPdf
   class Document
-    def initialize(qr_url, filename, output_folder, qr_size = 120)
+    attr_accessor :qr_url, :filename, :output_folder, :qr_size, :qr_corner
+
+    def initialize(qr_url, filename, output_folder, qr_corner, qr_size = 120)
       @qr_url = qr_url
       @filename = filename
       @output_folder = output_folder
       @qr_size = qr_size
+      @qr_corner = qr_corner
     end
 
     def find_corners(page, qr_size)
@@ -55,9 +58,11 @@ module QRPdf
 
       image = doc.images.add(png_io)
 
-      #canvas.image(image, at: corners['bottom-right'], width: @qr_size)
-      puts corners
-      p png
+      canvas.image(image, at: corners[@qr_corner], width: @qr_size)
+
+      FileUtils.mkdir_p(@output_folder)
+      output_path = File.join(@output_folder, @filename)
+      doc.write(output_path)
     end
   end
 end
